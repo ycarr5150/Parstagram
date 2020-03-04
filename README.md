@@ -23,4 +23,4 @@ The following **bonus** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![Twitter Demo](parstagram1.gif)
+![Parstagram Demo](parstagram1.gif)
