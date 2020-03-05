@@ -27,6 +27,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let query = PFQuery(className: "Posts")
         query.includeKey("author")
+        query.order(byDescending: "createdAt")
         query.limit = 20
         
         query.findObjectsInBackground { (posts, error) in
@@ -60,6 +61,10 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
 
+    @IBAction func onLogOutButton(_ sender: Any) {
+        PFUser.logOut()
+        self.dismiss(animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 

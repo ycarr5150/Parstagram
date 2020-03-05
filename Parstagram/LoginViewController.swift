@@ -14,11 +14,15 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        usernameField.text = ""
+        passwordField.text = ""
     }
     
     @IBAction func onSignIn(_ sender: Any) {
