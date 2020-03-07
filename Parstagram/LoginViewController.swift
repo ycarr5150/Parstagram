@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UIImagePickerControllerDelegate {
 
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -35,8 +35,16 @@ class LoginViewController: UIViewController {
     
     @IBAction func onSignUp(_ sender: Any) {
         let user = PFUser()
+
         user.username = usernameField.text
         user.password = passwordField.text
+        user["fullName"] = "John Doe"
+        user["bio"] = "Hello! I am new to this app! Pleased to meet you."
+        
+        let image = UIImage(named: "profile_tab.png")
+        let imageData = image?.pngData()
+        let file = PFFileObject(name: "profile.png", data: imageData!)
+        user["profilePic"] = file
         
         user.signUpInBackground { (success, error) in
             if success {

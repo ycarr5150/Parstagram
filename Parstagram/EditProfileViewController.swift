@@ -15,81 +15,50 @@ class EditProfileViewController: UIViewController {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var bioTextField: UITextField!
-    var user = PFUser.current()
-    var profile = [PFObject]()
+    var user = PFUser.current()!
+    var isAuthenticated: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let username = user!["username"]
+        let username = user["username"]
         self.navigationItem.title = username as? String
     
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let query = PFQuery(className: "Profile")
-        
-        query.whereKey("username", equalTo: user!)
-        query.findObjectsInBackground { (profile, error) in
-            if profile != nil {
-                self.profile = profile!
-                
-                for pro in profile! {
-                    let fullName = pro["name"] as? String
-                    let bio = pro["bio"] as? String
-                    
-                    self.nameTextField.text = fullName
-                    self.bioTextField.text = bio
-                }
-            } else {
-                print("Error retrieving profile.")
-            }
-        }
-        /*
-         query.getObjectInBackground(withId: "xWMyZEGZ") { (gameScore: PFObject?, error: Error?) in
-             if let error = error {
-                 print(error.localizedDescription)
-             } else if let gameScore = gameScore {
-                 gameScore["cheatMode"] = true
-                 gameScore["score"] = 1338
-                 gameScore.saveInBackground()
-             }
-         }
-         */
+        let fullName = user["fullName"] as? String
+        let bio = user["bio"] as? String
+        nameTextField.text = fullName
+        bioTextField.text = bio
     }
-    
-
     
     @IBAction func onCancelButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
-
     }
     
     @IBAction func onDoneButton(_ sender: Any) {
-        let editedUser = PFObject(className: "Profile")
-        
-        editedUser["username"] = PFUser.current()
-        editedUser["name"] = nameTextField.text!
-        editedUser["bio"] = bioTextField.text!
-        
-        editedUser.saveInBackground { (success, error) in
-            if success {
-                self.dismiss(animated: true, completion: nil)
-                print("Saved profile!")
-            } else {
-                print("Error saving profile")
+        if(user.isAuthenticated) {
+            user["fullName"] = nameTextField.text
+            user["bio"] = bioTextField.text
+            user.saveInBackground { (success, error) in
+                if success {
+                    print("Profile saved!")
+                } else {
+                    print("Profile was not saved!")
+                }
             }
         }
-        /*
-         let imageData = uploadImageView.image!.pngData()
-         let file = PFFileObject(name: "image.png", data: imageData!)
-         
-         post["image"] = file
-         */
-
+        
         dismiss(animated: true, completion: nil)
     }
+    
+    
+    @IBAction func onChangeProfilePhoto(_ sender: Any) {
+        
+    }
+    
     /*
     // MARK: - Navigation
 

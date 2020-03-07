@@ -10,13 +10,12 @@ import UIKit
 import Parse
 import AlamofireImage
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate {
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var bioLabel: UILabel!
     var user = PFUser.current()
-    var profile = [PFObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,25 +27,11 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let query = PFQuery(className: "Profile")
-        query.whereKey("username", equalTo: user!)
-        query.findObjectsInBackground { (profile, error) in
-            if profile != nil {
-                self.profile = profile!
-                
-                for pro in profile! {
-                    let fullName = pro["name"] as? String
-                    let bio = pro["bio"] as? String
-                    
-                    self.usernameLabel.text = fullName
-                    self.bioLabel.text = bio
-                }
-            } else {
-                print("Error retrieving profile.")
-            }
-        }
+        let fullName = user!["fullName"] as? String
+        let bio = user!["bio"] as? String
+        usernameLabel.text = fullName
+        bioLabel.text = bio
     }
-    
 
     /*
     // MARK: - Navigation

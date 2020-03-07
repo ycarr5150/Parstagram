@@ -405,6 +405,9 @@
                                 <rect key="frame" x="131" y="285" width="155" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Change Profile Photo"/>
+                                <connections>
+                                    <action selector="onChangeProfilePhoto:" destination="dZs-KX-3hi" eventType="touchUpInside" id="LX1-51-hUP"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mp8-d4-SLe">
                                 <rect key="frame" x="41" y="337" width="45" height="21"/>
