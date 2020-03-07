@@ -17,8 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if PFUser.current() != nil {
             let main = UIStoryboard(name: "Main", bundle: nil)
-            let feedNavigationController = main.instantiateViewController(withIdentifier: "FeedNavigationController")
-            window?.rootViewController = feedNavigationController
+            let tabBarController = main.instantiateViewController(withIdentifier: "TabBarController")
+            window?.rootViewController = tabBarController
         }
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
