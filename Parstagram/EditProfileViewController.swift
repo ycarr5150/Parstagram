@@ -11,10 +11,12 @@ import Parse
 import AlamofireImage
 import MessageInputBar
 
-class EditProfileViewController: UIViewController {
+class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var bioTextField: UITextField!
+    @IBOutlet weak var uploadImageView: UIImageView!
+    
     var user = PFUser.current()!
     var isAuthenticated: Bool = true
     
@@ -30,8 +32,13 @@ class EditProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         let fullName = user["fullName"] as? String
         let bio = user["bio"] as? String
+        let imageFile = user["profilePic"] as! PFFileObject
+        let urlString = imageFile.url!
+        let url = URL(string: urlString)!
+        
         nameTextField.text = fullName
         bioTextField.text = bio
+        uploadImageView.af_setImage(withURL: url)
     }
     
     @IBAction func onCancelButton(_ sender: Any) {
@@ -42,6 +49,11 @@ class EditProfileViewController: UIViewController {
         if(user.isAuthenticated) {
             user["fullName"] = nameTextField.text
             user["bio"] = bioTextField.text
+            
+            let imageData = uploadImageView.image!.pngData()
+            let file = PFFileObject(name: "profile.png", data: imageData!)
+            user["profilePic"] = file
+            
             user.saveInBackground { (success, error) in
                 if success {
                     print("Profile saved!")
@@ -56,7 +68,28 @@ class EditProfileViewController: UIViewController {
     
     
     @IBAction func onChangeProfilePhoto(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
         
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera
+        } else {
+            picker.sourceType = .photoLibrary
+        }
+        
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.editedImage] as! UIImage
+        
+        let size = CGSize(width: 25, height: 25)
+        let scaledImage = image.af_imageAspectScaled(toFill: size)
+        
+        uploadImageView.image = scaledImage
+        
+        dismiss(animated: true, completion: nil)
     }
     
     /*

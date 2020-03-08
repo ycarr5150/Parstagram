@@ -471,6 +471,7 @@
                     <connections>
                         <outlet property="bioTextField" destination="1zd-cv-W5v" id="ytd-F2-gIw"/>
                         <outlet property="nameTextField" destination="5Dt-cr-PZi" id="ZIr-h9-G5E"/>
+                        <outlet property="uploadImageView" destination="YJ0-Ek-OYy" id="yCk-ge-zQg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bcy-XS-mhp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

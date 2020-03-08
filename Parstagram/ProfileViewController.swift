@@ -15,11 +15,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var bioLabel: UILabel!
-    var user = PFUser.current()
+    var user = PFUser.current()!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let username = user!["username"]
+        let username = user["username"]
         
         self.navigationItem.title = username as? String
         
@@ -27,10 +27,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let fullName = user!["fullName"] as? String
-        let bio = user!["bio"] as? String
+        let fullName = user["fullName"] as? String
+        let bio = user["bio"] as? String
+        let imageFile = user["profilePic"] as! PFFileObject
+        let urlString = imageFile.url!
+        let url = URL(string: urlString)!
+        
         usernameLabel.text = fullName
         bioLabel.text = bio
+        profileImage.af_setImage(withURL: url)
     }
 
     /*
