@@ -14,6 +14,8 @@ import MessageInputBar
 class FeedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MessageInputBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    
+    
     var posts = [PFObject]()
     let commentBar = MessageInputBar()
     var showsCommentBar = false
@@ -115,8 +117,13 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell") as! PostTableViewCell
             let user = post["author"] as! PFUser
             
+            let profileImageFile = user["profilePic"] as! PFFileObject
+            let profileUrlString = profileImageFile.url!
+            let profileUrl = URL(string: profileUrlString)!
+            
             cell.usernameLabel.text = user.username
             cell.captionLabel.text = post["caption"] as! String
+            cell.profileImageView.af_setImage(withURL: profileUrl)
             
             let imageFile = post["image"] as! PFFileObject
             let urlString = imageFile.url!
@@ -133,6 +140,12 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             let user = comment["author"] as! PFUser
             cell.nameLabel.text = user.username
+            
+            let profileImageFile = user["profilePic"] as! PFFileObject
+            let profileUrlString = profileImageFile.url!
+            let profileUrl = URL(string: profileUrlString)!
+            
+            cell.profileImage.af_setImage(withURL: profileUrl)
             
             return cell
         } else {
