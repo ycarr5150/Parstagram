@@ -15,14 +15,14 @@ The following **required** functionality is completed:
 
 The following **bonus** features are implemented:
 
-- [ ] User can add a profile picture. (2pts)
-- [ ] Profile pictures are shown for posts and comments. (2pts)
+- [X] User can add a profile picture. (2pts)
+- [X] Profile pictures are shown for posts and comments. (2pts)
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-![Parstagram Demo](instagram2.gif)
+![Parstagram Demo](instagram3.gif)
 
 # Parstagram - Part I
 
