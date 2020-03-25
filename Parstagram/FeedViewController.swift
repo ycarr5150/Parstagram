@@ -83,11 +83,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         selectedPost.add(comment, forKey: "comments")
         
         selectedPost.saveInBackground { (success, error) in
-            if success {
-                print("Comment saved")
-            } else {
-                print("Error saving comment")
-            }
+            success ? print("Commend saved") : print("Error saving comment")
         }
         
         tableView.reloadData()
